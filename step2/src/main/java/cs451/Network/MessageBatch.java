@@ -3,7 +3,7 @@ package cs451.Network;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-public class MessageBatch {
+public class MessageBatch implements Comparable<MessageBatch> {
     private byte[] payload;
 
     public MessageBatch(byte source, byte destination) {
@@ -119,4 +119,10 @@ public class MessageBatch {
         MessageBatch m = (MessageBatch) o;
         return batchId() == m.batchId() && payload[0] == m.payload[0] && payload[2] == m.payload[2];
     }
+
+        @Override
+        public int compareTo(MessageBatch other) {
+            return Integer.compare(this.batchId(), other.batchId());
+        }
+
 }

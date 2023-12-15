@@ -14,7 +14,7 @@ import java.nio.file.Paths;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 
-import cs451.Broadcast.UniformReliableBroadcast;
+import cs451.Broadcast.FIFOBroadcast;
 import cs451.Network.MessageBatch;
 import cs451.Constants;
 
@@ -23,13 +23,13 @@ public class Main {
     private static ArrayBlockingQueue<String> logs;
     private static PrintWriter writer;
     private static Parser parser;
-    private static UniformReliableBroadcast urb;
+    private static FIFOBroadcast fifo;
 
     private static void handleSignal() {
         //immediately stop network packet processing
         System.out.println("Immediately stopping network packet processing.");
 
-        urb.halt();
+        fifo.halt();
 
         //write/flush output file if necessary
         System.out.println("Writing output.");
@@ -123,13 +123,13 @@ public class Main {
             hostMap.put((byte) host.getId(), host);
         }
 
-        urb = new UniformReliableBroadcast(hostMap, myId);
-        urb.start();
+        fifo = new FIFOBroadcast(hostMap, myId);
+        fifo.start();
 
         MessageBatch messageBatch = new MessageBatch(myId, myId);
         for (int i = 1; i <= num_messages; i++) { 
             if (messageBatch.getSize() == 8) {
-                urb.broadcast(messageBatch);
+                fifo.broadcast(messageBatch);
                 messageBatch = new MessageBatch(myId, myId);
             }
             try {
@@ -144,7 +144,7 @@ public class Main {
                 System.out.println(e);
             }
         }
-        urb.broadcast(messageBatch);
+        fifo.broadcast(messageBatch);
 
 
         // After a process finishes broadcasting,

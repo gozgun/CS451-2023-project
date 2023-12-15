@@ -19,8 +19,8 @@ public class Constants {
     public static final int CONFIG_VALUE = 6;
 
     // sizes for queues
-    public static final int DELIVERER_QUEUE_SIZE = 40000;
-    public static final int CLIENT_QUEUE_SIZE = 20000;
-    public static final int CLIENT_ACK_QUEUE_SIZE = 40000;
-    public static final int SL_MAP_SIZE = 20000;
+    public static final int DELIVERER_QUEUE_SIZE = 20000;
+    public static final int CLIENT_QUEUE_SIZE = 10000;
+    public static final int CLIENT_ACK_QUEUE_SIZE = 20000;
+    public static final int SL_MAP_SIZE = 100000000;
 }
